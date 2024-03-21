@@ -1,197 +1,72 @@
 import java.util.Scanner;
 
-class Student {
-    public static String[] nama = new String[10];
-    public static String[] fakultas = new String[10];
-    public static String[] nim = new String[10];
-    public static String[] prodi = new String[10];
-    public static String[] bukuTerpinjam = new String[10];
+class Mahasiswa {
+    static String universitas = "Universitas Muhammadiyah Malang";
+    String nama;
+    String nim;
+    String jurusan;
 
-    int checkStudent(){
-        Scanner scanString = new Scanner (System.in);
-        System.out.print("Masukkan nim anda: ");
-        String input = scanString.nextLine();
-        for (int i = 0; i < nim.length; i++) {
-            if (input.equals(nim[i])) {
-                System.out.println("Sukses login sebagai student\n");
-                return 1;
-            }
-        }
-        System.out.println("Nim tidak ditemukan\n");
-        return 0;
+    Mahasiswa(String nama, String nim, String jurusan) {
+        this.nama = nama;
+        this.nim = nim;
+        this.jurusan = jurusan;
     }
 
-    void pinjamBuku(int j){
-        Main main = new Main();
-        Scanner scanString = new Scanner (System.in);
-        System.out.print("Masukkan id buku yang ingin anda pinjam: ");
-        String idBuku = scanString.nextLine();
-        for (int i = 0; i < main.idBuku.length; i++) {
-            if (idBuku.equals(main.idBuku[i])) {
-                System.out.println("Buku id " + idBuku + " berhasil dipinjam");
-                main.stock[i] -= 1;
-                break;
-            }
-        }
-        bukuTerpinjam[j] = idBuku;
+    void tampilDataMahasiswa() {
+        System.out.println("Nama: " + nama);
+        System.out.println("NIM: " + nim);
+        System.out.println("Jurusan: " + jurusan);
     }
 
-    void bukuTerpinjam(){
-        System.out.println("Buku terpinjam: ");
-        for (int i = 0; i < bukuTerpinjam.length; i++) {
-            if (bukuTerpinjam[i] == null) {
-                break;
-            } else {
-                System.out.printf("%d. %s", i+1, bukuTerpinjam[i]);
-            }
-        }
+    static void tampilUniversitas() {
+        System.out.println(universitas);
     }
 }
 
-class Admin {
-    Student student = new Student();
-    public static String userx = "admin";
-    public static String passx = "1234";
-
-    int checkAdmin(){
-        Scanner scanString = new Scanner(System.in);
-        System.out.print("Enter your username (admin): ");
-        String user = scanString.nextLine();
-        System.out.print("Enter your password (admin): ");
-        String pass = scanString.nextLine();
-        if (user.equals(userx) && pass.equals(passx)) {
-            System.out.println("Sukses login sebagai admin\n");
-            return 1;
-        }
-        else {
-            System.out.println("Admin tidak ditemukan\n");
-            return 0;
-        }
-    }
-
-    void addStudent(int i){
-        Scanner scanString = new Scanner(System.in);
-        System.out.print("Masukkan nama mahasiswa: ");
-        Student.nama[i] = scanString.nextLine();
-
-        System.out.print("Masukkan fakultas mahasiswa: ");
-        Student.fakultas[i] = scanString.nextLine();
-
-        System.out.print("Masukkan NIM mahasiswa: ");
-        Student.nim[i] = scanString.nextLine();
-        while(true){
-            if (String.valueOf(Student.nim[i]).length() != 15 ) {
-                System.out.print("Nim Harus 15 Digit!!!\n");
-                System.out.print("Masukkan NIM mahasiswa: ");
-                student.nim[i] = scanString.nextLine();
-            } else {
-                break;
-            }
-        }
-
-        System.out.print("Masukkan jurusan mahasiswa: ");
-        Student.prodi[i] = scanString.nextLine();
-
-        System.out.print("Data Mahasiswa berhasil ditambahkan.\n");
-    }
-
-    void dispayStudent(int i){
-        System.out.println("Data mahasiswa ke " + (i+1));
-        System.out.println("Nama: " + Student.nama[i]);
-        System.out.println("Fakultas: " + Student.fakultas[i]);
-        System.out.println("nim: " + Student.nim[i]);
-        System.out.println("prodi: " + Student.prodi[i]);
-    }
-
-}
-
-class Main {
-    //data buku
-    public static String[] idBuku = new String[] {"388c-e681-9152", "ed90-be30-5cdb", "d95e-0c4a-9523", "a34b-z19hw-1905"};
-    public static String[] namaBuku = new String[] {"Matahari", "Bumi", "Bulan"};
-    public static String[] author = new String[] {"Tereliye", "Tereliye", "Tereliye"};
-    public static String[] category = new String[] {"Fiksi", "Fiksi", "Fiksi"};
-    public static int[] stock = new int[] {4, 0, 2};
-
-    void menuUtama(){
-        System.out.println("\n==== Library System ====");
-        System.out.println("1. Login as Student");
-        System.out.println("2. Login as Admin");
-        System.out.println("3. Exit");
-        System.out.print("Pilihan Anda: ");
-    }
-
-    void menuStudent(){
-        System.out.println("\n==== Student Menu ====");
-        System.out.println("1. Buku terpinjam");
-        System.out.println("2. Pinjam buku");
-        System.out.println("3. Logout");
-        System.out.print("Pilihan Anda: ");
-    }
-
-    void menuAdmin(){
-        System.out.println("\n==== Admin Menu ====");
-        System.out.println("1. Add Student");
-        System.out.println("2. Display Registered Student");
-        System.out.println("3. Logout");
-        System.out.print("Pilihan Anda: ");
-    }
-
-    void displayBook(){
-        System.out.println("===========================================================================================================================================");
-        System.out.println("|| No. || Id Buku\t\t\t || Nama Buku\t\t\t || Author\t\t || Category\t\t || Stock\t || ");
-        for (int i = 0; i < 3; i++){
-            System.out.printf("|| %d   || %s\t\t || %s\t\t\t || %s\t\t || %s\t\t || %d\t\t || \n", i, idBuku[i], namaBuku[i], author[i], category[i], stock[i]);
-        }
-        System.out.println("===========================================================================================================================================");
-    }
-
+public class Main {
     public static void main(String[] args) {
-        Student student = new Student();
-        Admin admin = new Admin();
-        Main main = new Main();
-        mainMenu:
+        Scanner scanner = new Scanner(System.in);
+        Mahasiswa[] data_mahasiswa = new Mahasiswa[100];
+        Mahasiswa.tampilUniversitas();
+
+        int jumlah_mahasiswa = 0;
+
         while (true) {
-            main.menuUtama();
-            Scanner scanInt = new Scanner(System.in);
-            int pilih = scanInt.nextInt();
-            if (pilih == 1) {
-                if (student.checkStudent() == 0) {
-                    continue mainMenu;
+            System.out.println("\nMenu:");
+            System.out.println("1. Tambah Data Mahasiswa");
+            System.out.println("2. Tampilkan Data Mahasiswa");
+            System.out.println("3. Keluar");
+            System.out.print("Pilihan: ");
+            int pilihan = scanner.nextInt();
+            scanner.nextLine();
+
+            if (pilihan == 1) {
+                System.out.println("\nMasukkan data mahasiswa ke-" + (jumlah_mahasiswa + 1));
+                System.out.print("Nama: ");
+                String nama = scanner.next();
+                System.out.print("NIM: ");
+                String nim = scanner.next();
+                while (nim.length() != 15) {
+                    System.out.println("Panjang NIM harus 15 angka. Silakan coba lagi.");
+                    System.out.print("NIM: ");
+                    nim = scanner.next();
                 }
-                int j = 0;
-                while (true) {
-                    main.menuStudent();
-                    pilih = scanInt.nextInt();
-                    if (pilih == 1){
-                        student.bukuTerpinjam();
-                    } else if (pilih == 2){
-                        main.displayBook();
-                        student.pinjamBuku(j);
-                        j++;
-                    } else {
-                        break;
-                    }
+                System.out.print("Jurusan: ");
+                String jurusan = scanner.nextLine();
+
+                data_mahasiswa[jumlah_mahasiswa] = new Mahasiswa(nama, nim, jurusan);
+                jumlah_mahasiswa++;
+            } else if (pilihan == 2) {
+                System.out.println("\nDaftar Mahasiswa:");
+                for (int i = 0; i < jumlah_mahasiswa; i++) {
+                    System.out.println("\nData Mahasiswa ke-" + (i + 1) + ":");
+                    data_mahasiswa[i].tampilDataMahasiswa();
                 }
-            } else if (pilih == 2) {
-                if (admin.checkAdmin() == 0) {
-                    continue mainMenu;
-                }
-                while (true) {
-                    main.menuAdmin();
-                    pilih = scanInt.nextInt();
-                    int i = 0;
-                    if (pilih == 1) {
-                        admin.addStudent(i);
-                        i++;
-                    } else if (pilih == 2) {
-                        admin.dispayStudent(i);
-                    } else {
-                        break;
-                    }
-                }
-            } else {
+            } else if (pilihan == 3) {
+                System.out.println("Terima kasih!");
                 break;
+            } else {
+                System.out.println("Pilihan tidak valid. Silakan coba lagi.");
             }
         }
     }
